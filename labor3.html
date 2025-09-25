@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>JavaScript Gyakorlatok</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; line-height: 1.6; }
+    h1 { color: #333; }
+    h2 { color: #555; }
+    section { margin-bottom: 30px; }
+    pre { background: #f4f4f4; padding: 10px; border-radius: 6px; border: 1px solid #ddd; }
+    code { background: #f9f2f4; color: #c7254e; padding: 2px 4px; border-radius: 3px; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>JavaScript Gyakorlatok</h1>
+    <p>A feladatok egymásra épülnek: kezdj az alapokkal, majd haladj a DOM és események felé!</p>
+  </header>
+
+  <section id="exercise1">
+    <h2>1. Két szám összeadása</h2>
+    <p>Készíts egy függvényt, amely két számot paraméterként vesz át és visszaadja az összegüket.</p>
+    <pre><code>function add(a, b) {
+  return a + b;
+}
+console.log(add(3, 4)); // 7</code></pre>
+  </section>
+
+  <section id="exercise2">
+    <h2>2. Páros vagy páratlan?</h2>
+    <p>Írj függvényt, amely visszaadja, hogy egy szám páros-e vagy páratlan.</p>
+    <pre><code>function isEven(num) {
+  return num % 2 === 0;
+}
+console.log(isEven(4)); // true
+console.log(isEven(5)); // false</code></pre>
+  </section>
+
+  <section id="exercise3">
+    <h2>3. Számláló gombnyomásra</h2>
+    <p>Készíts egy számlálót, amely növeli az értékét gombnyomáskor.</p>
+    <pre><code>&lt;button onclick="incrementCounter()"&gt;Növelés&lt;/button&gt;
+&lt;p id="counter"&gt;0&lt;/p&gt;
+
+&lt;script&gt;
+let count = 0;
+function incrementCounter() {
+  count++;
+  document.getElementById('counter').innerText = count;
+}
+&lt;/script&gt;</code></pre>
+  </section>
+
+  <section id="exercise4">
+    <h2>4. Adat bekérése a felhasználótól</h2>
+    <p>Kérj be egy nevet <code>prompt()</code>-tal, majd írd ki az oldalon.</p>
+    <pre><code>&lt;button onclick="askName()"&gt;Kérdezd meg a nevét&lt;/button&gt;
+&lt;p id="name"&gt;&lt;/p&gt;
+
+&lt;script&gt;
+function askName() {
+  let name = prompt('Mi a neved?');
+  document.getElementById('name').innerText = 'Üdvözöllek, ' + name + '!';
+}
+&lt;/script&gt;</code></pre>
+  </section>
+
+  <section id="exercise5">
+    <h2>5. Visszaszámláló</h2>
+    <p>Készíts egy 10 másodpercről induló visszaszámlálót.</p>
+    <pre><code>&lt;button onclick="startCountdown()"&gt;Indítsd el&lt;/button&gt;
+&lt;p id="countdown"&gt;10&lt;/p&gt;
+
+&lt;script&gt;
+function startCountdown() {
+  let timeLeft = 10;
+  let timer = setInterval(function() {
+    if (timeLeft <= 0) {
+      clearInterval(timer);
+      document.getElementById('countdown').innerText = 'Idő lejárt!';
+    } else {
+      document.getElementById('countdown').innerText = timeLeft;
+    }
+    timeLeft--;
+  }, 1000);
+}
+&lt;/script&gt;</code></pre>
+  </section>
+
+  <section id="exercise6">
+    <h2>6. Tömb és lista</h2>
+    <p>Hozz létre egy tömböt, majd jelenítsd meg az elemeit a weboldalon.</p>
+    <pre><code>&lt;ul id="fruitList"&gt;&lt;/ul&gt;
+
+&lt;script&gt;
+let fruits = ['Alma', 'Banán', 'Narancs'];
+fruits.forEach(function(fruit) {
+  document.getElementById('fruitList').innerHTML += '&lt;li&gt;' + fruit + '&lt;/li&gt;';
+});
+&lt;/script&gt;</code></pre>
+  </section>
+
+  <section id="exercise7">
+    <h2>7. Tömb elemeinek szorzása</h2>
+    <p>Írj függvényt, amely minden tömbelemre szorzót alkalmaz.</p>
+    <pre><code>function multiplyArray(arr, multiplier) {
+  return arr.map(num =&gt; num * multiplier);
+}
+let numbers = [1, 2, 3, 4];
+console.log(multiplyArray(numbers, 2)); // [2,4,6,8]</code></pre>
+  </section>
+
+  <section id="exercise8">
+    <h2>8. Objektum tulajdonságok megjelenítése</h2>
+    <p>Jelenítsd meg egy objektum adatait listában.</p>
+    <pre><code>&lt;ul id="personInfo"&gt;&lt;/ul&gt;
+
+&lt;script&gt;
+let person = { name: 'John', age: 30, city: 'Budapest' };
+for (let key in person) {
+  document.getElementById('personInfo').innerHTML +=
+    '&lt;li&gt;' + key + ': ' + person[key] + '&lt;/li&gt;';
+}
+&lt;/script&gt;</code></pre>
+  </section>
+
+  <section id="exercise9">
+    <h2>9. Eseménykezelő kattintásra</h2>
+    <p>Írj egy gombot, amely kattintáskor megváltoztatja a háttérszínt.</p>
+    <pre><code>&lt;button onclick="changeBg()"&gt;Háttér váltás&lt;/button&gt;
+
+&lt;script&gt;
+function changeBg() {
+  document.body.style.backgroundColor = 'lightcoral';
+}
+&lt;/script&gt;</code></pre>
+  </section>
+
+  <section id="exercise10">
+    <h2>10. Időzítő üdvözlő üzenet</h2>
+    <p>Használj <code>setTimeout()</code>-ot, hogy 5 másodperc után üzenetet írj ki.</p>
+    <pre><code>&lt;script&gt;
+window.onload = function() {
+  setTimeout(function() {
+    alert('Üdvözöllek az oldalon!');
+  }, 5000);
+}
+&lt;/script&gt;</code></pre>
+  </section>
+</body>
+</html>

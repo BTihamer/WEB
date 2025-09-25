@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CSS Gyakorlatok</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; line-height: 1.6; }
+    h1 { color: #333; }
+    h2 { color: #555; }
+    section { margin-bottom: 30px; }
+    ol, pre { line-height: 1.6; }
+    code { background: #f5f5f5; padding: 0 4px; border-radius: 3px; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>CSS Gyakorlatok</h1>
+    <p>Haladj sorrendben – a feladatok egymásra épülnek.</p>
+  </header>
+
+  <section id="exercise1">
+    <h2>1. Külső stíluslap csatolása</h2>
+    <p>Hozz létre egy <code>style.css</code> fájlt, és csatold a <code>&lt;head&gt;</code>-ben.</p>
+    <p><strong>Tipp:</strong> <code>&lt;link rel="stylesheet" href="style.css"&gt;</code></p>
+  </section>
+
+  <section id="exercise2">
+    <h2>2. Alap reset és dobozmodell</h2>
+    <p>Állíts be alapértelmezéseket a konzisztens megjelenéshez.</p>
+    <pre><code>* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { height: 100%; }</code></pre>
+  </section>
+
+  <section id="exercise3">
+    <h2>3. Színek és tipográfia</h2>
+    <p>Színezd meg a címsorokat, állíts be alap betűtípust és -méretet.</p>
+    <pre><code>h1 { color: royalblue; }
+h2 { color: seagreen; }
+body { font-family: Arial, sans-serif; font-size: 16px; }</code></pre>
+  </section>
+
+  <section id="exercise4">
+    <h2>4. Térközök és bekezdések</h2>
+    <p>Adj külső margót a bekezdéseknek és kényelmes sortávolságot.</p>
+    <pre><code>p { margin: 20px 0; line-height: 1.7; }</code></pre>
+  </section>
+
+  <section id="exercise5">
+    <h2>5. Háttérszín és kontraszt</h2>
+    <p>Adj világos háttérszínt az oldalhoz, figyelve az olvashatóságra.</p>
+    <pre><code>body { background-color: #f4f8ff; color: #222; }</code></pre>
+  </section>
+
+  <section id="exercise6">
+    <h2>6. Gomb-stílus és <em>hover</em> állapot</h2>
+    <p>Stilizálj egy gombot és adj rá lebegéskor színváltást.</p>
+    <pre><code>button {
+  background-color: orange; color: white; border: none;
+  padding: 10px 16px; border-radius: 6px; cursor: pointer;
+}
+button:hover { background-color: darkorange; }</code></pre>
+  </section>
+
+  <section id="exercise7">
+    <h2>7. Állapotok és fókusz-jelzés</h2>
+    <p>Biztosíts látható fókuszt billentyűzetnél is.</p>
+    <pre><code>button:focus, a:focus, input:focus, textarea:focus {
+  outline: 3px solid cornflowerblue; outline-offset: 2px;
+}</code></pre>
+  </section>
+
+  <section id="exercise8">
+    <h2>8. Képek formázása</h2>
+    <p>Kerekített sarkok vagy kör alakú avatar kép.</p>
+    <pre><code>img { max-width: 100%; height: auto; border-radius: 12px; }
+.avatar { width: 160px; height: 160px; border-radius: 50%; object-fit: cover; }</code></pre>
+  </section>
+
+  <section id="exercise9">
+    <h2>9. Listák testreszabása</h2>
+    <p>Rendezett listát római számokkal és extra beljebb húzással.</p>
+    <pre><code>ol { list-style-type: upper-roman; margin-left: 30px; }</code></pre>
+  </section>
+
+  <section id="exercise10">
+    <h2>10. Flexbox kétoszlopos elrendezés</h2>
+    <p>Hozz létre rugalmas, kétoszlopos elrendezést.</p>
+    <pre><code>.container { display: flex; gap: 20px; }
+.container &gt; div { flex: 1; padding: 10px; background: #fff; border-radius: 8px; }</code></pre>
+  </section>
+
+  <section id="exercise11">
+    <h2>11. Grid elrendezés és reszponzivitás</h2>
+    <p>Alakíts galériát CSS Griddel, törésponttal telefonra.</p>
+    <pre><code>.grid {
+  display: grid; gap: 16px;
+  grid-template-columns: repeat(3, 1fr);
+}
+@media (max-width: 800px) {
+  .grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 520px) {
+  .grid { grid-template-columns: 1fr; }
+}</code></pre>
+  </section>
+
+  <section id="exercise12">
+    <h2>12. Betűk a Google Fonts-ból</h2>
+    <p>Importálj egy betűtípust (pl. Roboto) és alkalmazd az oldalon.</p>
+    <pre><code>@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+body { font-family: 'Roboto', system-ui, -apple-system, sans-serif; }</code></pre>
+  </section>
+
+  <section id="exercise13">
+    <h2>13. Inline, belső és külső CSS gyakorlat</h2>
+    <ol>
+      <li>Készíts <strong>2 példát inline CSS-re</strong> (pl. egy-egy színezett szó).</li>
+      <li>Készíts <strong>2 példát belső (internal) CSS-re</strong> a <code>&lt;style&gt;</code>-ban.</li>
+      <li>Készíts <strong>2 külön külső CSS fájlt</strong> (pl. <code>base.css</code> és <code>components.css</code>) és csatold mindkettőt.</li>
+    </ol>
+    <pre><code>&lt;link rel="stylesheet" href="base.css"&gt;
+&lt;link rel="stylesheet" href="components.css"&gt;</code></pre>
+  </section>
+
+  <section id="exercise14">
+    <h2>14. Finomítás: átmenetek és animáció alapok</h2>
+    <p>Adj sima átmenetet a linkek és a gombok lebegéséhez.</p>
+    <pre><code>a, button { transition: background-color 0.2s, color 0.2s, transform 0.2s; }
+button:hover { transform: translateY(-1px); }</code></pre>
+  </section>
+
+  <section id="exercise15">
+    <h2>15. Összerendezés és esztétika</h2>
+    <p>Dolgozz önállóan: tedd a weboldalt letisztulttá és érthetővé. Figyelj a konzisztenciára (távolságok, színek, tipográfia, fókusz).</p>
+    <ul>
+      <li>Egységes térközskála (pl. 8px-es lépések).</li>
+      <li>Egységes gomb- és linkstílus.</li>
+      <li>Reszponzív ellenőrzés 360–1440px között.</li>
+    </ul>
+  </section>
+</body>
+</html>

@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="hu">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>HTML Gyakorlatok</title>
+    <style>
+      body { font-family: Arial, sans-serif; margin: 20px; line-height: 1.6; }
+      h1 { color: #333; }
+      h2 { color: #555; }
+      section { margin-bottom: 30px; }
+      ol { line-height: 1.6; }
+      code { background: #f5f5f5; padding: 0 4px; border-radius: 3px; }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>HTML Gyakorlatok</h1>
+      <p>Az alábbi feladatok egymásra épülnek. Haladj sorrendben!</p>
+    </header>
+
+    <section id="exercise1">
+      <h2>1. Alap HTML-struktúra (Főoldal)</h2>
+      <p>
+        Hozd létre az alap szerkezetet:
+        <code>&lt;!DOCTYPE html&gt;</code>, <code>&lt;html&gt;</code>,
+        <code>&lt;head&gt;</code>, <code>&lt;body&gt;</code>. Adj hozzá
+        <code>&lt;title&gt;</code>-t és egy főcímet (<code>&lt;h1&gt;</code>).
+      </p>
+      <p><strong>Tartalom minta:</strong> „Üdvözöllek a portfóliómban!”</p>
+    </section>
+
+    <section id="exercise2">
+      <h2>2. Fejléc és egyszerű navigáció</h2>
+      <ol>
+        <li>
+          Hozz létre egy fejlécet (<code>&lt;header&gt;</code>) benne egy
+          egyszerű navigációs sávval (<code>&lt;nav&gt;</code>).
+        </li>
+        <li>
+          Készíts belső hivatkozásokat (<code>&lt;a href="#...">&lt;/a&gt;</code>)
+          a következő szekciókra: Főoldal, Rólam, Képességek, Projektek,
+          Galéria, Kapcsolat.
+        </li>
+      </ol>
+    </section>
+
+    <section id="exercise3">
+      <h2>3. „Rólam” szekció</h2>
+      <ol>
+        <li>Adj hozzá egy főcímet: <code>&lt;h1&gt;Rólam&lt;/h1&gt;</code>.</li>
+        <li>
+          Két alcím: <code>&lt;h2&gt;Bemutatkozás&lt;/h2&gt;</code> és
+          <code>&lt;h2&gt;Érdeklődési körök&lt;/h2&gt;</code>.
+        </li>
+        <li>Írj rövid bekezdéseket mindkét alcím alá.</li>
+      </ol>
+    </section>
+
+    <section id="exercise4">
+      <h2>4. Profilkép hozzáadása</h2>
+      <p>
+        A „Rólam” részben szúrj be egy profilképet
+        <code>&lt;img&gt;</code> segítségével, és adj meg leíró
+        <code>alt</code> attribútumot.
+      </p>
+    </section>
+
+    <section id="exercise5">
+      <h2>5. Képességek felsorolása</h2>
+      <p>
+        Hozz létre egy rendezetlen listát (<code>&lt;ul&gt;</code>) legalább három
+        képességeddel (pl. HTML, CSS, JavaScript).
+      </p>
+    </section>
+
+    <section id="exercise6">
+      <h2>6. Projekttáblázat</h2>
+      <p>
+        Készíts egy táblázatot (<code>&lt;table&gt;</code>) az alábbi oszlopokkal:
+        „Projekt neve”, „Leírás”, „Használt technológiák”.
+      </p>
+    </section>
+
+    <section id="exercise7">
+      <h2>7. Oldalsáv (opcionális, de ajánlott)</h2>
+      <p>
+        Adj a layout-hoz egy oldalsávot (<code>&lt;aside&gt;</code>), benne egy
+        listával (<code>&lt;ul&gt;</code>) a projektjeidre ugró belső linkekkel
+        vagy aloldalak hivatkozásaival.
+      </p>
+    </section>
+
+    <section id="exercise8">
+      <h2>8. Képgaléria a projektekhez</h2>
+      <p>
+        Hozz létre egy egyszerű galériát, ahol minden elem
+        <code>&lt;figure&gt;</code> és <code>&lt;figcaption&gt;</code> párosból
+        áll (kép + rövid leírás).
+      </p>
+    </section>
+
+    <section id="exercise9">
+      <h2>9. Videó beágyazása</h2>
+      <p>
+        Ágyazz be egy YouTube-videót <code>&lt;iframe&gt;</code> segítségével,
+        ami bemutat egy projektet vagy technológiát.
+      </p>
+    </section>
+
+    <section id="exercise10">
+      <h2>10. Kapcsolatfelvételi űrlap</h2>
+      <p>
+        Készíts egy egyszerű űrlapot (<code>&lt;form&gt;</code>), amely bekéri a
+        nevet, e-mail címet és az üzenetet, valamint tartalmaz egy „Küldés”
+        gombot. (A beküldés működése most nem fontos, elég a HTML.)
+      </p>
+    </section>
+
+    <section id="exercise11">
+      <h2>11. Aloldalak és „Vissza” gomb</h2>
+      <ol>
+        <li>
+          Hozz létre külön HTML-oldalakat legalább a következő szekcióknak:
+          <em>Rólam</em>, <em>Projektek</em>, <em>Kapcsolat</em>.
+        </li>
+        <li>
+          Mindegyik aloldalon legyen egy jól látható „Vissza a főoldalra”
+          gomb/link, amely a főoldalra mutat.
+        </li>
+        <li>
+          A navigáció minden oldalon legyen konzisztens (ugyanaz a
+          <code>&lt;nav&gt;</code>).
+        </li>
+      </ol>
+    </section>
+
+    <section id="exercise12">
+      <h2>12. Extra (opcionális): Lábléc és elérhetőségek</h2>
+      <p>
+        Adj hozzá egy <code>&lt;footer&gt;</code>-t alap elérhetőségekkel,
+        szerzői jogi szöveggel és a jelenlegi évvel.
+      </p>
+    </section>
+  </body>
+</html>

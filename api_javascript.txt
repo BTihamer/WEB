@@ -1,0 +1,33 @@
+/// HTML
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Star Wars Characters</title>
+</head>
+<body>
+<button id="fetchButton">Fetch Star Wars Characters</button>
+<ol id="characterList"></ol>
+<script src="script.js"></script>
+</body>
+</html>
+
+
+//JAVASCRIPT
+
+const STAR_WARS_API_URL = 'https://swapi.dev/api/people/';
+
+// Feladat
+// Kérd le a Star Wars karaktereket a Star Wars API-ról, és jelenítsd meg őket egy listában
+// Tedd szebbé az oldalt CSS hozzáadásával
+// "Extra pontok járnak", ha az egyes karakterekhez tartozó filmeket is megjeleníted egy al-listában
+
+document.getElementById('fetchButton').addEventListener('click', function() {
+    fetchCharacters();
+});
+
+const fetchCharacters = () => {
+    console.log('Jelenleg semmit nem csinálok');
+}
