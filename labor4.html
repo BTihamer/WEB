@@ -1,0 +1,227 @@
+<!doctype html>
+<html lang="hu">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Labor 2 - Saját "domain", HTML, CSS gyakorlás</title>
+  <style>
+    :root{
+      --bg:#0f172a; /* slate-900 */
+      --card:#111827; /* gray-900 */
+      --muted:#94a3b8; /* slate-400 */
+      --text:#e5e7eb; /* gray-200 */
+      --accent:#22d3ee; /* cyan-400 */
+      --accent-2:#86efac; /* green-300 */
+      --border:#1f2937; /* gray-800 */
+      --code:#0b1022; /* deep */
+    }
+    *{box-sizing:border-box}
+    html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font:16px/1.6 system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,"Helvetica Neue",Arial}
+    a{color:var(--accent)}
+    .container{max-width:1100px;margin:0 auto;padding:32px 16px}
+    header{display:flex;gap:16px;align-items:center;justify-content:space-between;margin-bottom:24px}
+    h1{font-size:clamp(24px,3.2vw,40px);letter-spacing:0.2px;margin:0}
+    .badge{font-size:12px;color:#0f172a;background:var(--accent);padding:4px 10px;border-radius:999px;font-weight:700;text-transform:uppercase;letter-spacing:.08em}
+    .grid{display:grid;gap:20px}
+    @media(min-width:900px){.grid{grid-template-columns:1.1fr .9fr}}
+    .card{background:linear-gradient(180deg,rgba(255,255,255,.02),rgba(255,255,255,.01));border:1px solid var(--border);border-radius:16px;padding:20px}
+    h2{margin:0 0 10px 0;font-size:22px}
+    h3{margin:18px 0 8px 0;font-size:18px}
+    ul{margin:8px 0 8px 20px}
+    .muted{color:var(--muted)}
+    code, pre{font-family: ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace}
+    pre{background:var(--code);color:#d1d5db;border:1px solid var(--border);border-radius:12px;padding:14px;overflow:auto}
+    .two-col{display:grid;gap:14px}
+    @media(min-width:780px){.two-col{grid-template-columns:1fr 1fr}}
+    .checklist li{margin:6px 0}
+    .pill{display:inline-block;padding:2px 8px;border:1px solid var(--border);border-radius:999px;font-size:12px;color:var(--muted)}
+    .callout{border-left:4px solid var(--accent-2);padding:10px 12px;background:rgba(134,239,172,.08);border-radius:8px}
+    .footer{margin-top:32px;color:var(--muted);font-size:14px}
+    .kbd{border:1px solid var(--border);background:#0b1022;border-bottom-width:2px;padding:1px 6px;border-radius:6px;font-size:12px}
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Labor 2 - Saját "domain", HTML, CSS gyakorlás</h1>
+      <span class="badge">Feladatok + házi</span>
+    </header>
+
+    <div class="grid">
+      <!-- BAL OSZLOP -->
+      <section class="card">
+        <h2>Órai cél</h2>
+        <p>
+          A diákok készítsenek egy <strong>személyes honlapot</strong> a saját <code>felhasznalo.nev.github.io</code> domain alatt az 
+          <a href="https://github.com/academicpages/academicpages.github.io" target="_blank" rel="noopener">AcademicPages</a> sablon alapján, és a 
+          <code>_pages/lab1.html</code> oldalon CSS segítségével alakítsanak ki egy sakktáblát.
+        </p>
+      </section>
+
+      <section class="card">
+        <h2>Előfeltételek</h2>
+        <ul class="checklist">
+          <li>Aktív <strong>GitHub-fiók</strong>. Azonosítót az osztálylistába kérjük. <a href='https://docs.google.com/spreadsheets/d/1aif_iaVPwEWjiS4GGlPW1fNFW8TlWamSihPl3ZPRk2w/edit?usp=sharing'  target="_blank">Ide írd be</a></li>
+          <li>Alap <strong>Git</strong> ismeret: klónozás, commit, push, branch.</li>
+          <li>Egy portré vagy <em>avatar</em> kép (ha nem szeretnék saját fotóval).</li>
+          <li> Alap mappa strukrutra létrehozása (ezt meg lesz a fork-ból)</li>
+        </ul>
+      </section>
+
+      <section class="card">
+        <h2>1) Saját domain létrehozása</h2>
+        <ol>
+          <li><span class="pill">Fork</span> az AcademicPages-repo-ról: <code>academicpages/academicpages.github.io</code>.</li>
+          <li>A fork <strong>átnevezése</strong> saját felhasználónévre: <code>felhasznalo.github.io</code>.</li>
+          <li><strong>GitHub Pages</strong> bekapcsolása a repo beállításainál (<span class="kbd">Settings → Pages</span>). Forrás: <em>Deploy from a branch</em>, branch: <code>main</code>.</li>
+          <li>Várni a buildre, majd teszt: <code>https://felhasznalo.github.io</code>. vagy név. pl. tihamerballa.github.com.</li>
+        </ol>
+        <p class="muted">Ha org alatt dolgoznak, maradhat a repo <code>felhasznalo.github.io</code> néven publikusan.</p>
+      </section>
+
+      <section class="card">
+        <h2>2) Minimál beállítások </h2>
+        <div class="two-col">
+          <div>
+            <h3>A) Alap adatok</h3>
+            <ul>
+              <li><code>_config.yml</code>: <code>title</code>, <code>email</code>, <code>description</code>, <code>url</code> (pl. <code>https://felhasznalo.github.io</code>), <code>baseurl: ""</code></li>
+              <li>Profilkép: másolják a képet az <code>images/</code> mappába, majd állítsák be a kezdőlapon.</li>
+              <li>Elérhetőségek: email, LinkedIn, GitHub linkek kitöltése.</li>
+            </ul>
+          </div>
+          <div>
+            <h3>B) A következőket törölni kell:</h3>
+            <p>A következőket kérjük <strong>eltüntetni</strong>: <em>Publications</em>, <em>Talks</em>, <em>Teaching</em>.</p>
+            <ul>
+              <li><strong>Navigáció</strong>: a legtöbb AcademicPages-változatnál a menü a <code>_data/navigation.yml</code>-ben van. Kommentezzék ki vagy töröljék a fenti tételeket.</li>
+              <li><strong>Oldalak</strong>: a kapcsolódó fájlok általában a <code>_pages/</code> mappában vannak. Hagyhatják meg, de tegyék <code>nav_exclude: true</code>-ra az oldalak <em>front matter</em>-ében, vagy ideiglenesen törölhetik őket.</li>
+            </ul>
+            <pre><code># példa a _data/navigation.yml-ből
+- title: Home
+  url: /
+# - title: Publications
+#   url: /publications/
+# - title: Talks
+#   url: /talks/
+# - title: Teaching
+#   url: /teaching/
+</code></pre>
+          </div>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>3) Kezdőoldal minimális testreszabása</h2>
+        <ul class="checklist">
+          <li>Fénykép vagy avatar megjelenítése a nyitóoldalon.</li>
+          <li>Név és rövid bemutatkozás (1–2 mondat).</li>
+          <li>Elérhetőségek: email + legalább egy közösségi/portfólió link.</li>
+          <li>1–2 tartalmi blokk a hallgató érdeklődési köreiről.</li>
+        </ul>
+        <p><strong>Portfolio oldal</strong>: töltsenek fel 3–6 képet, amelyek az <em>egyetemi élethez</em> kapcsolódnak. Írjanak rövid (1–2 mondatos) képaláírást, és ügyeljenek az <em>alt</em> szövegre (akadálymentesség).</p>
+      </section>
+
+      <section class="card">
+        <h2>4) Feladat 2 – <code>_pages/lab1.html</code> létrehozása</h2>
+        <p>Hozzunk létre egy új fájlt: <code>_pages/lab1.html</code>. Az alábbi <em>HTML vázat</em> másoljuk be változtatás nélkül; a sakktábla kinézetét csak a <code>&lt;style&gt;...&lt;/style&gt;</code> részlettben modosítsuk.</p>
+        <pre><code>&lt;!-- _pages/lab1.html --&gt;
+
+&lt;style&gt;
+&lt;/style&gt;
+
+&lt;table id='sakktabla' cellspacing=0&gt;
+    &lt;tr&gt;
+        &lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;
+        &lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+        &lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;
+        &lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+        &lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;
+        &lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+        &lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;
+        &lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+        &lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;
+        &lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+        &lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;
+        &lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+        &lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;
+        &lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+        &lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;
+        &lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+&lt;/table&gt;
+</code></pre>
+        <h3>Tippek a CSS-hez</h3>
+        <pre><code>
+          /* Alap méretezés */
+          /* Sakktábla minta nth-child */
+</code></pre>
+        <p class="muted">Hasznos segédlet: <a href="https://www.w3schools.com/cssref/sel_nth-child.php" target="_blank" rel="noopener">CSS :nth-child()</a></p>
+      </section>
+
+      <section class="card">
+        <h2>5) Feladat 3 – CSS-sel alakítsanak ki sakktáblát</h2>
+        <p>Csak a <code>&lt;style&gt;</code> részben dolgozzanak; a HTML-t ne módosítsák. Értékelésnél díjazzuk a kreatív, de tiszta megoldásokat (változó színek, hover, árnyék, animáció, címkék az élek mentén stb.).</p>
+        <ul>
+          <li><strong>Alap</strong>: 8×8 tábla jól látható, kontrasztos mezőkkel.</li>
+          <li><strong>Pluszpont</strong>: reszponzív méretezés (vw alapú méretek), fókuszállapotok, magas kontraszt mód.</li>
+        </ul>
+      </section>
+
+      <section class="card">
+        <h2>Házifeladat</h2>
+       
+        <h3>1.) (válassz legalább 1-et)</h3>
+        <ol>
+        <li><strong>Rólunk/Profil</strong> oldal készítése Markdownban (front matter-rel: <code>title</code>, <code>permalink</code>). Legyen rajta rövid bemutatkozás és egy kép <em>alt</em> szöveggel.</li>
+        <li><strong>Kapcsolat</strong> szekció a nyitóoldalon: mailto link + 2 közösségi profil ikon/link. (Akadálymentes címkék: <code>aria-label</code>.)</li>
+        <li><strong>Menü testreszabás</strong>: <code>_data/navigation.yml</code> szerkesztése – a felesleges elemek (Publications/Talks/Teaching) rejtve maradnak, a sorrend pedig saját igény szerint.</li>
+        </ol>
+        
+        <h3>2.) (válassz legalább 1-et)</h3>
+        <ol>
+        <li><strong>404 oldal</strong> létrehozása (egyedi üzenettel és vissza a főoldalra gombbal).</li>
+        <li><strong>Favicon & site icon</strong> beállítása (<code>favicon.ico</code> vagy PNG + <code>&lt;link rel="icon"&gt;</code> a sablonban).</li>
+        <li><strong>Képek optimalizálása</strong>: legfeljebb 150KB/kép, <code>loading="lazy"</code> használata a portfólió képein.</li>
+        <li><strong>Dark mode</strong> csak CSS-sel: <code>@media (prefers-color-scheme: dark)</code> – színek átállítása külön JS nélkül.</li>
+        <li><strong>SEO meta</strong>: oldalcímek konzisztens formázása + leírás (<code>description</code> a <code>_config.yml</code>-ben), és megosztási kép (OG image) hozzáadása.</li>
+        </ol>
+        
+        <h3>3.)</h3>
+        <ol>
+        <li><strong>Egyszerű rácsos portfólió</strong> (CSS Grid): 6 kártya, képaláírással (<code>&lt;figure&gt; / &lt;figcaption&gt;</code>), mobilon 2 oszlop, asztalin 3.</li>
+        <li><strong>Hozzászólás a kódhoz</strong>: nyissatok egy saját <em>pull requestet</em> a repo-ban, írjatok értelmes PR-leírást, majd merge-eljétek.</li>
+        <li><strong>Lab1 gyorslink</strong>: a főoldalra kerüljön egy „Sakktábla – Labor 1” gomb, amely a <code>/lab1/</code> oldalra mutat (<code>nav_exclude: true</code> maradhat).</li>
+        </ol>
+        <p class="muted">Ihlet: <a href="https://academicpages.github.io/" target="_blank" rel="noopener">academicpages.github.io</a> – de a megvalósítás legyen saját és egyszerű.</p>
+        </section>
+        
+
+      <section class="card">
+        <h2>Mai óra célja:</h2>
+        <ul class="checklist">
+          <li>GitHub azonosítók begyűjtve az osztálylistához.</li>
+          <li>Fork → átnevezés → Pages engedélyezve → oldal elérhető.</li>
+          <li>Minimál testreszabás: fotó/avatar, név, elérhetőség(ek), rövid bemutatkozás.</li>
+          <li>Nem kívánt menüelemek rejtése megoldva.</li>
+          <li><code>_pages/lab1.html</code> létrehozva, sakktábla CSS legalább alap szinten kész.</li>
+        </ul>
+      </section>
+    </div>
+  </div>
+</body>
+</html>
