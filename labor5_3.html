@@ -1,0 +1,268 @@
+<!doctype html>
+<html lang="hu">
+<head>
+  <meta charset="utf-8" />
+  <title>Vue + Firebase – alap worksheet</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- 1) Készíts új HTML fájlt és illeszd be EZT a head-be: -->
+  <!-- Vue 3 (global build, egyszerű kipróbáláshoz) -->
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  <!-- Firebase (CDN, modular SDK – Firestore-hoz és Auth-hoz) -->
+  <!-- Tipp: a verziószámot (10.x.x) hagyd meg/állítsd a doksi szerint. -->
+  <script type="module">
+    // Ezt a <script type="module"> blokkot meghagyjuk az oldal ALJÁN is – ott lesz a kód.
+    // Itt csak azért szerepel, hogy a böngésző előre felkészüljön a module futtatásra.
+  </script>
+
+  <style>
+    :root { --gap: 1rem; }
+    * { box-sizing: border-box; }
+    body { font-family: system-ui, Segoe UI, Roboto, Arial, sans-serif; margin: 0; background: #f7f7f8; color: #222; }
+    header { padding: 1rem; border-bottom: 1px solid #eee; background: #fff; }
+    main { max-width: 900px; margin: 0 auto; padding: 1rem; }
+    section { background: #fff; border: 1px solid #eee; border-radius: .75rem; padding: 1rem; margin: 1rem 0; }
+    .stack { display: grid; gap: var(--gap); }
+    .row { display: grid; grid-template-columns: 1fr auto; gap: .5rem; align-items: center; }
+    input, button { font: inherit; }
+    input { padding: .6rem .7rem; border: 1px solid #ccc; border-radius: .5rem; }
+    button { padding: .6rem .9rem; border: 0; border-radius: .5rem; background: #0d6efd; color: #fff; cursor: pointer; }
+    button.secondary { background: #6c757d; }
+    ul { padding-left: 1.2rem; }
+    li { margin: .25rem 0; }
+    code, pre { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+    pre { background:#f1f3f5; padding: .75rem; border-radius: .5rem; overflow:auto; }
+    .muted { color:#666; }
+  </style>
+</head>
+<body>
+  <header>
+    <strong>Vue + Firebase – alapok</strong>
+    <div class="muted">Órai worksheet: kis Vue app + Firestore mentés/olvasás. Kódminták ↓, megoldást a diák írja meg.</div>
+  </header>
+
+  <main class="stack">
+
+    <!-- A) VUE ALAP – lokális állapot (Firebase nélkül) -->
+    <section id="vue-only" class="stack">
+      <h2>A) Vue – minimál app</h2>
+      <ol>
+        <li>Hozz létre egy Vue appot: <code>Vue.createApp({...}).mount('#app')</code>.</li>
+        <li>Állapot: <code>items: []</code>, <code>newText: ''</code>.</li>
+        <li>Műveletek: <code>addItem()</code> (push a listába), <code>removeItem(i)</code>.</li>
+      </ol>
+
+      <div id="app" class="stack">
+        <!-- TODO: a diák tölti ki a v-model + @submit.prevent logikát -->
+        <form class="row" @submit.prevent="addItem">
+          <input v-model="newText" placeholder="Új elem..." />
+          <button>Hozzáad</button>
+        </form>
+
+        <ul>
+          <li v-for="(it, i) in items" :key="i">
+            {{ it.text }}
+            <button class="secondary" @click="removeItem(i)">Törlés</button>
+          </li>
+        </ul>
+      </div>
+
+      <pre>// Minta (vázlat) – a diák fejezi be:
+const app = Vue.createApp({
+  data(){ return { items: [], newText: '' } },
+  methods:{
+    addItem(){
+      // TODO: ha newText nem üres → this.items.push({ text: this.newText, createdAt: Date.now() })
+      // majd ürítsd ki a newText-et
+    },
+    removeItem(i){
+      // TODO: this.items.splice(i, 1)
+    }
+  }
+});
+app.mount('#app');</pre>
+    </section>
+
+    <!-- B) FIREBASE BEKÖTÉS – Firestore (CDN, modular) -->
+    <section id="firebase" class="stack">
+      <h2>B) Firebase – Firestore (CDN, modular)</h2>
+      <ol>
+        <li>Készíts projektet a <em>Firebase Console</em>-ban, regisztrálj Web Appot, másold ki a <strong>config</strong>-ot.</li>
+        <li>Importok (CDN, <code>type="module"</code>): <code>initializeApp</code>, <code>getFirestore</code>, <code>collection</code>, <code>addDoc</code>, <code>onSnapshot</code>, <code>query</code>, <code>orderBy</code>, <code>deleteDoc</code>, <code>doc</code>.</li>
+        <li>Olvasás: <code>onSnapshot(query(...))</code> → frissítsd a Vue <code>items</code>-t.</li>
+        <li>Írás: <code>addDoc(collection(db,'items'), {text, createdAt: Date.now()})</code>.</li>
+        <li>Törlés: <code>deleteDoc(doc(db, 'items', id))</code>.</li>
+      </ol>
+
+      <pre>// CDN importok (példa – verziószámot frissítsd a doksi szerint):
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
+import { getFirestore, collection, addDoc, onSnapshot, query, orderBy, deleteDoc, doc }
+  from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
+
+// 1) Config – ezt a Console adja, IDE ILLeszd be:
+const firebaseConfig = {
+  // apiKey: '...', authDomain: '...', projectId: '...', stb.
+};
+
+// 2) Init
+const fbApp = initializeApp(firebaseConfig);
+const db = getFirestore(fbApp);
+
+// 3) Realtime olvasás (vázlat)
+const q = query(collection(db, 'items'), orderBy('createdAt', 'asc'));
+onSnapshot(q, (snap) => {
+  // TODO: állítsd át a VUE állapotot a snap alapján (id + data())
+});
+
+// 4) Írás (vázlat)
+async function addToDb(text){
+  // TODO: addDoc(collection(db,'items'), { text, createdAt: Date.now() })
+}
+
+// 5) Törlés (vázlat)
+async function removeFromDb(id){
+  // TODO: deleteDoc(doc(db,'items', id))
+}</pre>
+
+      <div class="muted">
+        Tipp: CDN-es Firebase modulok és Vue CDN gyorsstart: lásd a hivatalos doksit.  
+        (Firebasenél alternatív CDN beállítások és modular API; Vue-nál CDN quick start.)
+      </div>
+    </section>
+
+    <!-- C) KÖZÖS MINI-FELADAT – “Közös lista Firestore-ral” -->
+    <section id="task" class="stack">
+      <h2>C) Közös mini-feladat (óra)</h2>
+      <ol>
+        <li>Kösd össze az A) Vue listát a B) Firestore-ral: <em>addItem()</em> → <code>addToDb()</code>, <em>removeItem()</em> → <code>removeFromDb(id)</code>.</li>
+        <li><strong>Realtimen</strong> jelenjen meg minden gépen (próbáljatok ki ketten ugyanarra a kollekcióra mutatva).</li>
+        <li>Adatmodell: <code>{ text: string, createdAt: number }</code>, doksi ID-t tárold pl. <code>it.id</code>-be.</li>
+      </ol>
+      <div class="muted">Biztonság: fejlesztéshez ideiglenesen “test mode” szabályok jók, élesben használj szabályokat (auth alapján).</div>
+    </section>
+
+    <!-- D) EXTRA (opció): AUTH + név -->
+    <section id="extra" class="stack">
+      <h2>D) (Opcionális) Auth + név</h2>
+      <ol>
+        <li>Google bejelentkezés (Popup): <code>getAuth</code>, <code>GoogleAuthProvider</code>, <code>signInWithPopup</code>.</li>
+        <li>Mentéskor tedd bele a felhasználó nevét / uid-ját: <code>{ text, uid, name }</code>.</li>
+        <li>Listában jelezd a saját elemeket (pl. félkövér).</li>
+      </ol>
+      <pre>// Auth vázlat:
+import { getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged }
+  from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js';
+
+const auth = getAuth(fbApp);
+const provider = new GoogleAuthProvider();
+
+async function signIn(){ await signInWithPopup(auth, provider); }
+
+onAuthStateChanged(auth, (user) => {
+  // TODO: mentsd egy Vue state-be (currentUser), UI frissítése
+});</pre>
+    </section>
+
+    <!-- E) HÁZI FELADAT (nem túl nehéz) -->
+    <section id="homework" class="stack">
+      <h2>🏠 Házi feladat (válassz 1-et)</h2>
+
+      <h3>1) Vendégkönyv (Firestore + Vue)</h3>
+      <ul>
+        <li>Űrlap: név (nem kötelező), üzenet (kötelező).</li>
+        <li>Mentés: Firestore <code>messages</code> kollekcióba: <code>{ text, name, createdAt }</code>.</li>
+        <li>Lista: időrend szerint, realtime frissüljön.</li>
+        <li><em>Extra:</em> törlés gomb a saját üzeneted mellett (Auth-pal).</li>
+      </ul>
+
+      <h3>2) Szavazás (Firestore + Vue)</h3>
+      <ul>
+        <li>Két gomb: 👍 és 👎, számlálók Firestore-ban (dokumentum mezők).</li>
+        <li>Kattintás → tranzakció/inkrement: <code>updateDoc</code> / <code>increment(1)</code>.</li>
+        <li>Realtime kiírás (onSnapshot).</li>
+        <li><em>Extra:</em> egyszer szavazhass csak (uid/ip nélkül elég ha lokális flag).</li>
+      </ul>
+
+      <h3>Leadás</h3>
+      <ul>
+        <li>Egy fájl (vagy kis projekt mappában), rövid README: mit csinál, hogyan próbálható ki.</li>
+        <li>Képernyőkép a működésről.</li>
+      </ul>
+    </section>
+
+    <section class="stack">
+      <h2>Hasznos linkek</h2>
+      <ul>
+        <li>Firebase web setup (config + moduláris importok, CDN): hivatalos doksi. :contentReference[oaicite:0]{index=0}</li>
+        <li>Vue 3 – Quick Start / CDN használat: hivatalos doksi. :contentReference[oaicite:1]{index=1}</li>
+      </ul>
+    </section>
+  </main>
+
+  <!-- 🔽 Itt jön a tényleges JS – a diák itt dolgozik tovább -->
+  <script type="module">
+    // === VUE ALAP (MEGOLDÁSHEZ VÁZLAT – egészítsd ki) =========================
+    const app = Vue.createApp({
+      data(){ return { items: [], newText: '', currentUser: null } },
+      methods:{
+        addItem(){
+          // TODO: ha van Firebase kötés, hívd a addToDb(this.newText)-et,
+          // különben lokálisan pushold be:
+          if (!this.newText.trim()) return;
+          this.items.push({ id: crypto.randomUUID(), text: this.newText, createdAt: Date.now() });
+          this.newText = '';
+        },
+        removeItem(i){
+          // TODO: Firebase esetén removeFromDb(id); itt csak lokális:
+          this.items.splice(i, 1);
+        }
+      }
+    });
+
+    // A VUE példány a DOM után mountolódik:
+    const vm = app.mount('#app');
+
+    // === FIREBASE KÖTÉS (OPCIONÁLIS az órán, kötelező a háziban) ==============
+    // 1) IMPORTOK – FRISSÍTSD a verziót a Firebase doksi szerint!
+    // Megjegyzés: ha most offline/órán nincs config, hagyd kommentben.
+    /*
+    import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
+    import { getFirestore, collection, addDoc, onSnapshot, query, orderBy, deleteDoc, doc }
+      from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
+
+    const firebaseConfig = {
+      // TODO: ide illeszd a Console-ból a saját configodat
+    };
+
+    const fbApp = initializeApp(firebaseConfig);
+    const db = getFirestore(fbApp);
+
+    // Realtime olvasás → Vue state frissítése
+    const q = query(collection(db, 'items'), orderBy('createdAt', 'asc'));
+    onSnapshot(q, (snap) => {
+      vm.items = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+    });
+
+    // Írás / Törlés helper
+    async function addToDb(text){
+      if (!text?.trim()) return;
+      await addDoc(collection(db, 'items'), { text, createdAt: Date.now() });
+    }
+    async function removeFromDb(id){
+      await deleteDoc(doc(db, 'items', id));
+    }
+
+    // Kösd be a Vue metódusokba (ha szeretnéd Firebase-re irányítani):
+    vm.addItem = async function(){
+      if (!this.newText.trim()) return;
+      await addToDb(this.newText);
+      this.newText = '';
+    };
+    vm.removeItem = async function(i){
+      const id = this.items[i]?.id;
+      if (id) await removeFromDb(id);
+    };
+    */
+  </script>
+</body>
+</html>

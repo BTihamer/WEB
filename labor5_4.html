@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Web‑CV Feladatsor (Dark)</title>
+  <meta name="color-scheme" content="dark">
+  <style>
+    :root{
+      --bg:#0b0f14; --panel:#11161d; --panel2:#0f141a; --text:#e6e9ef; --muted:#9aa4b2;
+      --accent:#7dd3fc; --accent2:#a78bfa; --border:#1f2937; --radius:16px; --shadow:0 10px 30px rgba(0,0,0,.35);
+      --sans: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans";
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    }
+    html,body{background:radial-gradient(1200px 800px at 0% 0%, rgba(124,58,237,.08), transparent 40%),
+                         radial-gradient(1200px 800px at 100% 0%, rgba(14,165,233,.08), transparent 40%),var(--bg);
+              color:var(--text);margin:0;font-family:var(--sans)}
+    .wrap{max-width:980px;margin:40px auto 80px;padding:0 20px}
+    header{background:linear-gradient(180deg,var(--panel),var(--panel2));border:1px solid var(--border);
+           border-radius:16px;box-shadow:var(--shadow);padding:20px}
+    h1{margin:0 0 8px;font-size:clamp(22px,2.8vw,34px)}
+    .lead{color:var(--muted);margin:0}
+    section{margin-top:18px;background:linear-gradient(180deg,var(--panel),var(--panel2));border:1px solid var(--border);
+            border-radius:16px;box-shadow:var(--shadow);padding:18px}
+    h2{margin:0 0 10px;font-size:16px;color:var(--accent);letter-spacing:.3px;text-transform:uppercase}
+    ol{margin:0 0 0 20px}
+    li{margin:10px 0}
+    code, pre{font-family:var(--mono);font-size:13px;background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:10px}
+    pre{padding:14px;overflow:auto}
+    .pill{display:inline-flex;gap:8px;align-items:center;padding:6px 10px;border:1px solid var(--border);border-radius:999px;background:rgba(255,255,255,.03);font-size:12px}
+    .btn{border:1px solid var(--border);background:rgba(255,255,255,.03);color:var(--text);padding:8px 12px;border-radius:10px;cursor:pointer}
+    .grid{display:grid;gap:14px}
+    @media(min-width:900px){.grid{grid-template-columns:1.2fr 1fr}}
+    .card{border:1px dashed var(--border);border-radius:12px;padding:12px;background:rgba(255,255,255,.02)}
+    .ok{color:#34d399}.warn{color:#f59e0b}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <h1>Web‑CV feladatsor (külön HTML fájlban dolgozol)</h1>
+      <p class="lead">Készíts saját <strong>index.html</strong> fájlt, és add hozzá a profilkártyát. Az alábbi lépéseket követve a végén egy kész, sötét témás CV oldalad lesz.</p>
+    </header>
+
+    <div class="grid">
+      <section>
+        <h2>Feladat 1 — Saját HTML létrehozása</h2>
+        <ol>
+          <li>Hozz létre egy <span class="pill">portfolio.html</span> fájlt a gépeden.</li>
+          <li>Adj hozzá alap HTML vázat (<code>&lt;!DOCTYPE html&gt;</code>, <code>&lt;html&gt;</code>, <code>&lt;head&gt;</code>, <code>&lt;body&gt;</code>), és állíts be sötét témát (háttér, szövegszín).</li>
+          <li>Linkeld be saját <strong>style.css</strong> fájlod <em>(vagy használj &lt;style&gt;‑t a head‑ben)</em>.</li>
+        </ol>
+        <details style="margin-top:10px">
+          <summary>Kezdő sablon (másolható)</summary>
+          <pre>&lt;!DOCTYPE html&gt;
+&lt;html lang="hu"&gt;
+&lt;head&gt;
+  &lt;meta charset="utf-8"&gt;
+  &lt;meta name="viewport" content="width=device-width, initial-scale=1"&gt;
+  &lt;title&gt;Portfólió / CV&lt;/title&gt;
+  &lt;meta name="color-scheme" content="dark"&gt;
+  &lt;style&gt;
+    body{background:#0b0f14;color:#e6e9ef;font-family:system-ui, -apple-system, Segoe UI, Roboto, Arial;margin:0;padding:24px}
+  &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;main id="app"&gt;&lt;/main&gt;
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+        </details>
+      </section>
+
+      <section>
+        <h2>Feladat 2 — Profilkártya hozzáadása a saját oldaladhoz</h2>
+        <p>Készíts egy kártyát <strong>profilfotóval</strong>, <strong>névvel</strong>, <strong>pozícióval</strong> és <strong>linkekkel</strong> (email, LinkedIn, GitHub). Ez a kártya később a CV tetején fog megjelenni.</p>
+        <p>Illeszd a következőt a <code>&lt;main id="app"&gt;</code> belsejébe:</p>
+        <pre>&lt;section class="profile-card"&gt;
+  &lt;img class="avatar" src="te.jpg" alt="Profilkép" /&gt;
+  &lt;div class="meta"&gt;
+    &lt;h1 class="name"&gt;Név Vezetéknév&lt;/h1&gt;
+    &lt;p class="role"&gt;Pozíció · Szakterület&lt;/p&gt;
+    &lt;div class="links"&gt;
+      &lt;a href="mailto:te@pelda.hu"&gt;Email&lt;/a&gt; ·
+      &lt;a href="https://linkedin.com/in/te"&gt;LinkedIn&lt;/a&gt; ·
+      &lt;a href="https://github.com/te"&gt;GitHub&lt;/a&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/section&gt;</pre>
+
+        <p>Add hozzá ezt a minimál CSS‑t a kártyához (head &lt;style&gt;‑ba mehet):</p>
+        <pre>.profile-card{display:flex;gap:18px;align-items:center;background:#11161d;border:1px solid #1f2937;border-radius:16px;padding:16px;box-shadow:0 10px 30px rgba(0,0,0,.35)}
+.profile-card .avatar{width:96px;height:96px;border-radius:50%;object-fit:cover;border:2px solid #1f2937}
+.profile-card .name{margin:0;font-size:28px}
+.profile-card .role{margin:4px 0 8px;color:#9aa4b2}
+.profile-card .links a{color:#e6e9ef;text-decoration:none}
+.profile-card .links a:hover{text-decoration:underline}</pre>
+
+        <p class="ok">✅ Elfogadási kritériumok:</p>
+        <ul>
+          <li>A kártya reszponzív, 600px alatt a kép a név fölé kerül (media query).</li>
+          <li>Kontrasztos, sötét háttér és világos szöveg.</li>
+          <li>Képfájl (vagy placeholder URL) működik.</li>
+        </ul>
+
+        <details style="margin-top:8px">
+          <summary>Reszponzív töréspont példa</summary>
+          <pre>@media (max-width: 600px){
+  .profile-card{flex-direction:column;align-items:flex-start}
+  .profile-card .avatar{width:84px;height:84px}
+}</pre>
+        </details>
+
+        <p>Tesztkép hiányában használhatsz placeholdert: <code>https://picsum.photos/200</code> vagy <code>https://i.pravatar.cc/200</code>.</p>
+      </section>
+
+      <section>
+        <h2>Feladat 3 — CV szekciók (a saját fájlodban)</h2>
+        <ol>
+          <li>Hozz létre szekciókat: <em>Bemutatkozás</em>, <em>Tapasztalat</em>, <em>Oktatás</em>, <em>Készségek</em>, <em>Kapcsolat</em>.</li>
+          <li>Mindegyik szekció legyen <span class="pill">kártya</span> (sötét panel, kerekített sarok, belső padding).</li>
+          <li>Tapasztalatnál legalább 2 munkahely, mindegyiknél 2–3 bullet.</li>
+          <li>Készségeknél “chip”‑szerű címkék (pl. Python, React...).</li>
+        </ol>
+        <details>
+          <summary>Chip példa</summary>
+          <pre>.chip{display:inline-block;margin:4px 6px 0 0;padding:6px 10px;border:1px solid #1f2937;border-radius:999px;background:rgba(255,255,255,.03);font-size:12px}</pre>
+        </details>
+      </section>
+
+      <section>
+        <h2>Feladat 4 — Linkek és SEO apróságok</h2>
+        <ol>
+          <li>Adj meg címet a lapnak (pl. “Név – Portfólió / CV”).</li>
+          <li>Töltsd ki a <code>&lt;meta name="description"&gt;</code>‑t rövid összegzéssel.</li>
+          <li>Minden külső link új lapon nyíljon: <code>target="_blank" rel="noopener"</code>.</li>
+          <li>Favicon opcionális.</li>
+        </ol>
+      </section>
+
+      <section>
+        <h2>Feladat 5 — Publikálás</h2>
+        <ol>
+          <li>Nyisd meg a <strong>portfolio.html</strong>‑t a böngészőben és ellenőrizd a reszponzivitást.</li>
+          <li class="card">Töltsd fel GitHub Pagesra.</li>
+        </ol>
+      </section>
+    </div>
+  </div>
+</body>
+</html>

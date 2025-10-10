@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="hu">
+<head>
+  <meta charset="utf-8">
+  <title>Bootstrap + jQuery gyakorló és házi feladat</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Készíts egy új HTML fájlt, és illeszd be az alábbi sorokat a <head> részbe: -->
+  <!-- Bootstrap + jQuery (CDN) -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+  <style>
+    body { padding: 2rem; font-family: system-ui, sans-serif; background: #f8f9fa; }
+    section { margin-bottom: 2rem; }
+    h2 { margin-top: 1.5rem; }
+    pre.code { background: #f1f3f5; padding: 1rem; border-radius: .5rem; }
+    .example { background: #fff; border: 1px solid #ddd; padding: 1rem; border-radius: .5rem; margin-top: .5rem; }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <h1 class="mb-4 text-center">Bootstrap + jQuery – órai és házi feladatok</h1>
+  <p class="text-muted text-center">
+  Az alábbi feladatok között vannak rövid kódminták, de a működő kódot neked kell befejezni.</p>
+
+  <!-- 1. NAVBAR -->
+  <section id="navbar">
+    <h2>1️⃣ Bootstrap Navbar</h2>
+    <p><strong>Feladat:</strong> készíts egy sötét (<code>bg-dark</code>) navigációs sávot. Bal oldalt logó, jobbra linkek (Főoldal, Kapcsolat). Összeomló menü mobilon.</p>
+
+    <pre class="code">
+&lt;nav class="navbar navbar-expand-lg navbar-dark bg-dark"&gt;
+  &lt;div class="container-fluid"&gt;
+    &lt;a class="navbar-brand" href="#"&gt;LOGO&lt;/a&gt;
+    &lt;button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#menu"&gt;
+      &lt;span class="navbar-toggler-icon"&gt;&lt;/span&gt;
+    &lt;/button&gt;
+    &lt;div class="collapse navbar-collapse" id="menu"&gt;
+      &lt;ul class="navbar-nav ms-auto"&gt;
+        &lt;li class="nav-item"&gt;&lt;a class="nav-link active" href="#"&gt;Főoldal&lt;/a&gt;&lt;/li&gt;
+        &lt;li class="nav-item"&gt;&lt;a class="nav-link" href="#"&gt;Kapcsolat&lt;/a&gt;&lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/nav&gt;
+    </pre>
+  </section>
+
+  <!-- 2. KÁRTYÁK -->
+  <section id="cards">
+    <h2>2️⃣ Bootstrap Card Grid</h2>
+    <p><strong>Feladat:</strong> három kártya rácsban (<code>.row</code> + <code>.col-md-4</code>), képpel, címmel, rövid szöveggel, gombbal.</p>
+
+    <pre class="code">
+&lt;div class="row g-3"&gt;
+  &lt;div class="col-md-4"&gt;
+    &lt;div class="card"&gt;
+      &lt;img src="https://picsum.photos/300/200" class="card-img-top"&gt;
+      &lt;div class="card-body"&gt;
+        &lt;h5 class="card-title"&gt;Cím&lt;/h5&gt;
+        &lt;p class="card-text"&gt;Rövid leírás.&lt;/p&gt;
+        &lt;a href="#" class="btn btn-primary"&gt;Megnyitás&lt;/a&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+    </pre>
+  </section>
+
+  <!-- 3. ALERT + BUTTON -->
+  <section id="alert">
+    <h2>3️⃣ Alert + Gomb</h2>
+    <p><strong>Feladat:</strong> kattintásra jelenjen meg egy Bootstrap alert, amit le lehet zárni.  
+    <strong>tipp:</strong> a <code>fade show</code> osztályokkal animálható is.</p>
+
+    <pre class="code">
+// jQuery példa
+$('#showAlert').on('click', function() {
+  // TODO: készíts egy .alert-success elemet, és illeszd be egy div-be pl. $('#alertBox')
+});
+    </pre>
+  </section>
+
+  <!-- 4. MODAL -->
+  <section id="modal">
+    <h2>4️⃣ Modal</h2>
+    <p><strong>Feladat:</strong> Készíts egy gombot, ami megnyit egy modalt. A modal tartalmát jQuery-vel is módosíthatod.</p>
+
+    <pre class="code">
+&lt;button data-bs-toggle="modal" data-bs-target="#infoModal" class="btn btn-primary"&gt;Részletek&lt;/button&gt;
+
+&lt;div class="modal fade" id="infoModal"&gt;
+  &lt;div class="modal-dialog"&gt;
+    &lt;div class="modal-content"&gt;
+      &lt;div class="modal-header"&gt;
+        &lt;h5 class="modal-title"&gt;Cím&lt;/h5&gt;
+        &lt;button class="btn-close" data-bs-dismiss="modal"&gt;&lt;/button&gt;
+      &lt;/div&gt;
+      &lt;div class="modal-body"&gt;
+        &lt;p&gt;Modal tartalma&lt;/p&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+    </pre>
+
+    <pre class="code">
+// jQuery tipp:
+$('#infoModal').on('show.bs.modal', function(){
+  $('.modal-body p').text('Tartalom betöltve jQuery-ből.');
+});
+    </pre>
+  </section>
+
+  <!-- 5. FORM -->
+  <section id="form">
+    <h2>5️⃣ Bootstrap Form</h2>
+    <p><strong>Feladat:</strong> Készíts egy űrlapot (név, email, üzenet). Bootstrap <code>.form-control</code> osztályokat használj.  
+    jQuery-vel figyeld a beküldést, és írd ki: “Köszönjük, [név]!”.</p>
+
+    <pre class="code">
+&lt;form id="contactForm" class="p-3 border bg-white rounded"&gt;
+  &lt;input id="name" class="form-control mb-2" placeholder="Név" required&gt;
+  &lt;input id="email" type="email" class="form-control mb-2" placeholder="Email" required&gt;
+  &lt;textarea id="msg" class="form-control mb-2" placeholder="Üzenet"&gt;&lt;/textarea&gt;
+  &lt;button class="btn btn-success"&gt;Küldés&lt;/button&gt;
+&lt;/form&gt;
+
+&lt;div id="thanks" class="mt-2 text-success"&gt;&lt;/div&gt;
+    </pre>
+
+    <pre class="code">
+// jQuery példa (kiegészítendő)
+$('#contactForm').on('submit', function(e){
+  e.preventDefault();
+  const nev = $('#name').val();
+  // TODO: ellenőrizd, hogy van-e név, és írd ki a visszajelzést a #thanks elembe
+});
+    </pre>
+  </section>
+
+  <!-- 6. JQUERY MINI FELADATOK -->
+  <section id="jquery">
+    <h2>6️⃣ jQuery mini feladatok</h2>
+    <ul>
+      <li><strong>a)</strong> Kattintásra változtasd meg egy bekezdés szövegét.</li>
+      <li><strong>b)</strong> Egy gomb kattintásra adj hozzá / vedd le a <code>.highlight</code> osztályt.</li>
+      <li><strong>c)</strong> AJAX GET kérés a <code>https://httpbin.org/get</code> címre, az eredményt írd ki egy <code>&lt;pre&gt;</code> elembe.</li>
+    </ul>
+
+    <pre class="code">
+// Példa minták:
+$('#btnText').on('click', function(){ $('#para').text('Új szöveg'); });
+
+$('#btnToggle').on('click', function(){ $('#box').toggleClass('highlight'); });
+
+$.get('https://httpbin.org/get', function(data){
+  $('#result').text(JSON.stringify(data, null, 2));
+});
+    </pre>
+  </section>
+
+  <!-- HÁZI FELADAT -->
+  <section id="homework" class="bg-white p-3 rounded border">
+    <h2>🏠 Házi feladat</h2>
+    <p>Készíts <strong>egyetlen HTML fájlt</strong> (<code>bootstrap_jquery_hazi.html</code>) az alábbi elemekkel:</p>
+    <ol>
+      <li>Bootstrap Navbar (legalább 2 link)</li>
+      <li>Card Grid (3 kártya, gombokkal)</li>
+      <li>Modal – a gomb egyik kártyához kapcsolódjon</li>
+      <li>Form (név, email) – Bootstrap formázással, jQuery-vel feldolgozva</li>
+      <li>Legalább 2 jQuery interakció (pl. szövegváltoztatás, highlight, AJAX)</li>
+    </ol>
+  </section>
+</div>
+
+</body>
+</html>
