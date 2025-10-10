@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="hu">
+<head>
+  <meta charset="utf-8">
+  <title>Ismétlés</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    :root { --gap: 1rem; --primary:#0d6efd; }
+    *{box-sizing:border-box} body{font-family:system-ui,Segoe UI,Roboto,Arial,sans-serif;margin:0;line-height:1.5;color:#222}
+    header{position:sticky;top:0;background:#fff;border-bottom:1px solid #eee;padding:.75rem 1rem}
+    main{max-width:900px;margin:0 auto;padding:1rem}
+    section{margin:1.5rem 0} h1,h2{margin:.2rem 0 .6rem}
+    .muted{color:#666} .stack{display:grid;gap:var(--gap)}
+    .btn{background:var(--primary);color:#fff;border:0;padding:.5rem .8rem;border-radius:.5rem;cursor:pointer}
+    input[type="text"],input[type="email"]{padding:.5rem .6rem;border:1px solid #ccc;border-radius:.5rem;width:100%}
+    ul{padding-left:1.25rem} .box{width:200px;padding:12px;border:4px solid #999;margin:.5rem 0;background:#f7f7f7}
+    .grid{display:grid;gap:1rem}
+    @media(max-width:700px){.flex{flex-direction:column;align-items:flex-start}}
+  </style>
+</head>
+<body>
+  <header>
+    <strong>Ismétlés - 30 perc </strong>
+  </header>
+  <main>
+    <p class="muted">Cél: ismétlés </p>
+
+    <!-- 1) DEVTOOLS -->
+    <section id="devtools" class="stack">
+      <h2>1) Chrome DevTools (Elements + Console)</h2>
+      <ol>
+        <li>Nyisd meg: <kbd>F12</kbd> → Elements. <strong>TODO:</strong> módosítsd élőben ennek a gombnak a feliratát. </li>
+        <li><strong>TODO:</strong> Console-ban írd át az oldal főcímét erre: <code>„Órai gyakorlás”</code>.</li>
+        <li><strong>TODO:</strong> A működő változásokat másold be a fájlba is (ne maradjon csak élő módosítás).</li>
+      </ol>
+      <button id="live-btn" class="btn">Felirat módosítása itt</button>
+      <div class="box">Box-modell demó</div>
+    </section>
+
+    <!-- 2) DOM -->
+    <section id="dom" class="stack">
+      <h2>2) DOM – mini teendőlista</h2>
+      <form id="todo-form" style="display:grid;grid-template-columns:1fr auto;gap:.5rem;align-items:center">
+        <input id="todo-input" type="text" placeholder="Új tétel...">
+        <button class="btn">Hozzáad</button>
+      </form>
+      <ul id="todo-list"><!-- indulóan üres --></ul>
+      <ul>
+        <li><strong>TODO:</strong> JS-ben fogd meg az inputot/listát (getElementById / querySelector).</li>
+        <li><strong>TODO:</strong> Űrlap beküldésekor hozz létre <code>&lt;li&gt;</code>-t: <code>&lt;span&gt;szöveg&lt;/span&gt; &lt;button class="del"&gt;Törlés&lt;/button&gt;</code>.</li>
+        <li><strong>TODO:</strong> Delegált eseménykezelő a listán: <em>span</em>-ra katt → toggle „done” osztály; „Törlés” gomb → elem törlése.</li>
+      </ul>
+    </section>
+
+    <!-- 3) HTML + FORMS -->
+    <section id="forms" class="stack">
+      <h2>3) HTML + űrlapok (GET / POST)</h2>
+      <div class="grid" style="grid-template-columns:repeat(2,minmax(0,1fr))">
+        <div>
+          <h3>GET űrlap</h3>
+          <form id="search-form" method="GET">
+            <input name="q" type="text" placeholder="Keresés...">
+            <button class="btn" type="submit">Keres</button>
+          </form>
+          <p class="muted"><strong>TODO:</strong> beküldés után nézd meg a címsort (querystring). JS-ből írd ki a q értékét ide: <span id="q-out">—</span>.</p>
+        </div>
+        <div>
+          <h3>POST űrlap</h3>
+          <form id="post-form" method="POST" action="https://httpbin.org/post" target="_blank" rel="noopener">
+            <input name="email" type="email" required placeholder="emailed@domain.tld">
+            <button class="btn" type="submit">Küldés</button>
+          </form>
+          <p class="muted"><strong>TODO:</strong> DevTools → Network: figyeld a metódust és a payloadot.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4) SELECTORS -->
+    <section id="selectors" class="stack">
+      <h2>4) CSS/JS szelektorok</h2>
+      <div class="grid" style="grid-template-columns:repeat(3,minmax(0,1fr))">
+        <article class="card card-item" data-level="beginner"><h3>Bevezető</h3></article>
+        <article class="card card-item featured" id="k2" data-level="intermediate"><h3>Közép</h3></article>
+        <article class="card card-item" data-level="advanced"><h3>Haladó</h3></article>
+      </div>
+      <ul>
+        <li><strong>TODO (CSS):</strong> írj szabályokat ide a fájl tetejére:
+          <ul>
+            <li><code>.card-item { border:1px solid #ddd; padding:1rem; border-radius:.5rem; }</code></li>
+            <li><code>#k2 { outline:2px solid var(--primary); }</code></li>
+            <li><code>.card-item[data-level="advanced"] { background:#f3f7ff; }</code></li>
+            <li><code>.card-item:first-child::before { content:"★ "; color:var(--primary); }</code></li>
+          </ul>
+        </li>
+        <li><strong>TODO (JS Console):</strong> válaszd ki: <code>getElementById('k2')</code>, <code>querySelector('.card-item.featured')</code>, <code>querySelectorAll('.card-item')</code>.</li>
+      </ul>
+    </section>
+
+    <!-- 5) BOX + FLEX -->
+    <section id="boxflex" class="stack">
+      <h2>5) Box-modell + Flexbox fejléc</h2>
+      <div class="flex" style="display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:.5rem .75rem;border:1px solid #ddd;border-radius:.5rem">
+        <strong>Demo Site</strong>
+        <nav style="display:flex;gap:.75rem"><a href="#devtools">DevTools</a><a href="#dom">DOM</a><a href="#grid">Grid</a></nav>
+      </div>
+      <div class="box">Box-modell: content + padding + border + margin</div>
+      <ul>
+        <li><strong>TODO:</strong> módosítsd a fenti flex sort úgy, hogy mobilon (≤700px) oszlopba törjön (van media rule; igazítsd a részleteket).</li>
+        <li><strong>TODO:</strong> DevTools → Computed: növeld a <code>.box</code> paddinget és figyeld a méretváltozást.</li>
+      </ul>
+    </section>
+
+    <!-- 6) GRID -->
+    <section id="grid" class="stack">
+      <h2>6) CSS Grid – reszponzív</h2>
+      <div class="grid grid-cards" style="grid-template-columns:repeat(3,1fr)">
+        <article class="card wide"><h3>Kiemelt</h3><p>Span 2 oszlop nagy kijelzőn.</p></article>
+        <article class="card"><h3>Kártya</h3></article>
+        <article class="card"><h3>Kártya</h3></article>
+        <article class="card"><h3>Kártya</h3></article>
+        <article class="card"><h3>Kártya</h3></article>
+      </div>
+      <ul>
+        <li><strong>TODO:</strong> CSS-ben: <code>.grid-cards { display:grid; gap:1rem; }</code></li>
+        <li><strong>TODO:</strong> <code>.grid-cards .wide { grid-column: span 2; }</code> – csak ≥900px esetén.</li>
+        <li><strong>TODO:</strong> Media query: ≤900px → 2 oszlop; ≤600px → 1 oszlop.</li>
+      </ul>
+    </section>
+
+    <footer class="muted" style="margin-top:1.5rem">
+      <p>Kész: 6 blokk, mindegyikben kézzelfogható TODO-k. Célidő ~1 óra.</p>
+    </footer>
+  </main>
+
+  <script>
+    const $ = (sel, root=document) => root.querySelector(sel);
+    const $$ = (sel, root=document) => [...root.querySelectorAll(sel)];
+
+    const todoForm = $('#todo-form');
+    const todoInput = $('#todo-input');
+    const todoList  = $('#todo-list');
+
+    todoForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const v = todoInput.value.trim();
+      if (!v) return;
+      const li = document.createElement('li');
+      li.innerHTML = '<span>'+v+'</span> <button class="btn del" type="button">Törlés</button>';
+      todoList.append(li);
+      todoInput.value = '';
+    });
+
+    todoList.addEventListener('click', (e) => {
+      if (e.target.classList.contains('del')) e.target.closest('li')?.remove();
+      else if (e.target.tagName === 'SPAN') e.target.classList.toggle('done');
+    });
+
+    // GET q kiírása
+    (function(){
+      const out = document.getElementById('q-out');
+      if (!out) return;
+      const q = new URLSearchParams(location.search).get('q');
+      out.textContent = q ? '"' + q + '"' : '—';
+    })();
+  </script>
+</body>
+</html>
