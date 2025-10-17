@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Labor: Vue.js + Firebase + Cloud Functions – Weather App</title>
+  <style>
+    :root {
+      --bg: #0b0f19;
+      --card: #111827;
+      --muted: #9ca3af;
+      --text: #e5e7eb;
+      --accent: #60a5fa;
+      --accent-2: #34d399;
+      --code: #0c1222;
+      --border: #1f2937;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; background: var(--bg); color: var(--text); font: 16px/1.6 system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, "Helvetica Neue", Arial, "Apple Color Emoji", "Segoe UI Emoji"; }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    header {
+      padding: 40px 24px 16px;
+      background: linear-gradient(135deg, rgba(96,165,250,.12), rgba(52,211,153,.08));
+      border-bottom: 1px solid var(--border);
+    }
+    header h1 {
+      margin: 0 0 8px; font-size: 28px; letter-spacing: .3px;
+    }
+    header p { margin: 0; color: var(--muted); }
+    main { padding: 24px; max-width: 980px; margin: 0 auto; }
+    section { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 20px; margin: 16px 0; }
+    h2 { margin: 0 0 12px; font-size: 22px; }
+    h3 { margin: 16px 0 8px; font-size: 18px; }
+    ul, ol { margin: 8px 0 8px 20px; }
+    .two-col { display: grid; grid-template-columns: 1fr; gap: 12px; }
+    @media (min-width: 880px) {
+      .two-col { grid-template-columns: 1fr 1fr; }
+    }
+    .kbd { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; background: #0a0f1d; color: #d1d5db; padding: 2px 6px; border: 1px solid #111827; border-radius: 6px; }
+    pre, code { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; }
+    pre {
+      background: var(--code);
+      padding: 14px; border-radius: 10px; overflow-x: auto; border: 1px solid var(--border);
+    }
+    .tag { display: inline-block; padding: 4px 10px; border-radius: 999px; border: 1px solid var(--border); background: #0c1220; color: var(--muted); margin-right: 6px; margin-bottom: 6px; font-size: 12px; }
+    .note { border-left: 3px solid var(--accent); padding-left: 12px; color: var(--muted); }
+    .checklist li { margin: 6px 0; }
+    .grid { display: grid; gap: 10px; grid-template-columns: 1fr; }
+    @media (min-width: 720px) {
+      .grid { grid-template-columns: repeat(3, 1fr); }
+    }
+    footer { color: var(--muted); text-align: center; padding: 32px 16px; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Labor: Vue.js + Firebase + Cloud Functions – Weather App</h1>
+    <p>3. évfolyam – gyakorlati projekt: frontend (Vue 3), backend proxy (Firebase Functions), hosting és opcionális adatkezelés (Firestore)</p>
+  </header>
+
+  <main>
+    <section>
+      <h2>🎯 Cél</h2>
+      <p>Készítsetek egy egyszerű, de teljes értékű időjárás-alkalmazást, amely <strong>Vue 3</strong>-at használ a felületen, a külső időjárás API-t pedig <strong>Firebase Cloud Function</strong> hívja meg (proxy + kulcs elrejtése). Az appot <strong>Firebase Hostingon</strong> publikáljátok, opcionálisan a keresési előzményeket <strong>Firestore</strong>-ban tároljátok.</p>
+      <div>
+        <span class="tag">Vue 3</span>
+        <span class="tag">Axios</span>
+        <span class="tag">Firebase Hosting</span>
+        <span class="tag">Cloud Functions (Node.js)</span>
+        <span class="tag">Firestore (opcionális)</span>
+      </div>
+    </section>
+
+    <section>
+      <h2>🧩 Követelmények</h2>
+      <div class="two-col">
+        <div>
+          <h3>Frontend</h3>
+          <ul>
+            <li>Vue 3</li>
+            <li>Axios a HTTP kérésekhez</li>
+            <li>Reszponzív UI, input (város), gomb, kártya</li>
+          </ul>
+        </div>
+        <div>
+          <h3>Backend / Serverless</h3>
+          <ul>
+            <li>Firebase Cloud Functions (HTTPS endpoint)</li>
+            <li>Function hívja a publikus weather API-t (pl. OpenWeatherMap)</li>
+            <li>API kulcs titokban: <span class="kbd">functions.config()</span></li>
+          </ul>
+          <h3>Hosting / DB (opcionális)</h3>
+          <ul>
+            <li>Firebase Hosting a Vue apphoz</li>
+            <li>Firestore: utolsó keresések / kedvencek</li>
+          </ul>
+        </div>
+      </div>
+      <p class="note">Megjegyzés: más időjárás API is használható (pl. WeatherAPI), a lényeg, hogy a kulcs a felhőben maradjon, és a frontend csak a Functiont hívja.</p>
+    </section>
+
+    <section>
+      <h2>🗂️ Projekt struktúra (javaslat)</h2>
+<pre><code>weather-app/
+├── functions/
+│   ├── index.js
+│   ├── package.json
+├── src/
+│   ├── App.vue
+│   ├── components/
+│   │   └── WeatherCard.vue
+│   ├── views/
+│   │   └── HomeView.vue
+│   ├── main.js
+│   ├── services/
+│   │   └── api.js
+├── firebase.json
+├── .firebaserc
+└── package.json
+</code></pre>
+    </section>
+
+    <section>
+      <h2>⚙️ Lépésről lépésre</h2>
+      <h3>1) Alap Vue 3 projekt</h3>
+<pre><code># Projekt létrehozása
+        npm create vue@latest weather-app
+        cd weather-app
+        npm install
+        npm run dev
+
+# Fejlesztő szerver
+npm run dev
+</code></pre>
+
+      <h3>2) Firebase beállítás és Hosting</h3>
+<pre><code># Firebase CLI telepítés
+npm install -g firebase-tools
+firebase login
+firebase init
+</code></pre>
+
+      <h3>3) Cloud Function (proxy az API felé)</h3>
+<pre><code>const functions = require("firebase-functions");
+const axios = require("axios");
+
+exports.getWeather = functions.https.onRequest(async (req, res) => {
+  res.set("Access-Control-Allow-Origin", "*");
+  const city = req.query.city;
+  const apiKey = functions.config().weather.key;
+  const url = \`https://api.openweathermap.org/data/2.5/weather?q=\${city}&units=metric&appid=\${apiKey}\`;
+
+  try {
+    const { data } = await axios.get(url);
+    res.json(data);
+  } catch (error) {
+    res.status(500).send(error.message);
+  }
+});
+</code></pre>
+    </section>
+
+    <section>
+        <h2>🚀 Deploy – éles környezetbe helyezés</h2>
+        <p>Ha minden működik lokálisan az emulátorban, jöhet a projekt publikálása a Firebase szervereire.</p>
+      
+        <h3>1️⃣ Build és deploy parancsok</h3>
+        <pre><code># Frontend buildelése (Vite)
+      npm run build
+      
+      # Feltöltés a Firebase-re
+      firebase deploy
+        </code></pre>
+      
+        <p>A deploy végén a konzolban megkapod az URL-eket:</p>
+        <ul>
+          <li><strong>Hosting URL:</strong> pl. <code>https://myproject.web.app</code></li>
+          <li><strong>Function URL:</strong> pl. <code>https://us-central1-myproject.cloudfunctions.net/getWeather</code></li>
+        </ul>
+      
+        <h3>2️⃣ Beállítások ellenőrzése</h3>
+        <ul>
+          <li>Győződj meg róla, hogy a <code>firebase.json</code> tartalmazza a megfelelő <code>rewrites</code>-t:</li>
+        </ul>
+      
+        <pre><code>{
+        "hosting": {
+          "public": "dist",
+          "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
+          "rewrites": [
+            { "source": "/api/**", "function": "getWeather" },
+            { "source": "**", "destination": "/index.html" }
+          ]
+        }
+      }</code></pre>
+      
+        <h3>3️⃣ API kulcs biztonság</h3>
+        <p>Az <strong>OpenWeatherMap API kulcs</strong> soha ne legyen a frontend kódban. Tárold a Cloud Function configban:</p>
+      
+        <pre><code>firebase functions:config:set weather.key="IDE_AZ_API_KEY"
+      firebase deploy --only functions</code></pre>
+      
+        <p class="note">Ezzel az API kulcs a Google Cloud környezetében biztonságosan elérhető lesz, és a hallgatók sem tudják kiszivárogtatni.</p>
+      
+        <h3>4️⃣ Tesztelés</h3>
+        <p>A deploy után próbáld ki a Function-t közvetlenül a böngészőből vagy Postmanből:</p>
+        <pre><code>https://us-central1-&lt;PROJECT_ID&gt;.cloudfunctions.net/getWeather?city=Budapest</code></pre>
+      </section>
+  </main>
+</body>
+</html>

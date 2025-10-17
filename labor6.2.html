@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Labor: Flutter Web + Firebase + Cloud Functions – Weather App</title>
+  <style>
+    :root {
+      --bg: #0b0f19;
+      --card: #111827;
+      --muted: #9ca3af;
+      --text: #e5e7eb;
+      --accent: #60a5fa;
+      --accent-2: #34d399;
+      --code: #0c1222;
+      --border: #1f2937;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; background: var(--bg); color: var(--text); font: 16px/1.6 system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, "Helvetica Neue", Arial; }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    header {
+      padding: 40px 24px 16px;
+      background: linear-gradient(135deg, rgba(96,165,250,.12), rgba(52,211,153,.08));
+      border-bottom: 1px solid var(--border);
+    }
+    header h1 { margin: 0 0 8px; font-size: 28px; }
+    header p { margin: 0; color: var(--muted); }
+    main { padding: 24px; max-width: 960px; margin: 0 auto; }
+    section { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 20px; margin: 16px 0; }
+    h2 { margin: 0 0 12px; font-size: 22px; }
+    h3 { margin: 16px 0 8px; font-size: 18px; }
+    ul, ol { margin: 8px 0 8px 20px; }
+    pre { background: var(--code); color: var(--text); padding: 14px; border-radius: 10px; overflow-x: auto; border: 1px solid var(--border); }
+    code { font-family: monospace; }
+    .tag { display: inline-block; padding: 4px 10px; border-radius: 999px; border: 1px solid var(--border); background: #0c1220; color: var(--muted); margin-right: 6px; margin-bottom: 6px; font-size: 12px; }
+    .note { border-left: 3px solid var(--accent); padding-left: 12px; color: var(--muted); }
+    footer { color: var(--muted); text-align: center; padding: 32px 16px; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Labor: Flutter Web + Firebase + Cloud Functions – Weather App</h1>
+    <p>3. évfolyam – gyakorlati projekt: Flutter frontend, Firebase Function backend, hosting és adatkezelés</p>
+  </header>
+
+  <main>
+    <section>
+      <h2>🎯 Cél</h2>
+      <p>Készítsetek egy egyszerű időjárás-alkalmazást <strong>Flutter Web</strong>-en, amely <strong>Firebase Cloud Function</strong> segítségével hívja meg az <strong>OpenWeatherMap API</strong>-t. A Flutter app csak a Function URL-jét éri el, így az API kulcs biztonságban marad.</p>
+      <div>
+        <span class="tag">Flutter Web</span>
+        <span class="tag">Firebase Hosting</span>
+        <span class="tag">Cloud Functions</span>
+        <span class="tag">Dart http package</span>
+        <span class="tag">OpenWeatherMap API</span>
+      </div>
+    </section>
+
+    <section>
+      <h2>🧩 Követelmények</h2>
+      <ul>
+        <li>Flutter SDK telepítve (<code>flutter --version</code>)</li>
+        <li>Firebase CLI (<code>npm install -g firebase-tools</code>)</li>
+        <li>Firebase projekt létrehozva</li>
+        <li>OpenWeatherMap API kulcs</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>📁 Projektstruktúra (javaslat)</h2>
+<pre><code>weather_flutter/
+├── lib/
+│   ├── main.dart
+│   └── weather_service.dart
+├── functions/
+│   ├── index.js
+│   └── package.json
+├── firebase.json
+└── .firebaserc
+</code></pre>
+    </section>
+
+    <section>
+      <h2>⚙️ Lépésről lépésre</h2>
+
+      <h3>1️⃣ Flutter projekt létrehozása</h3>
+<pre><code>flutter create weather_flutter
+cd weather_flutter
+flutter run -d chrome
+</code></pre>
+
+      <h3>2️⃣ Firebase beállítása</h3>
+<pre><code>firebase login
+firebase init
+flutterfire configure
+</code></pre>
+
+      <h3>3️⃣ Cloud Function létrehozása</h3>
+<pre><code>// functions/index.js
+const functions = require("firebase-functions");
+const axios = require("axios");
+
+exports.getWeather = functions.https.onRequest(async (req, res) => {
+  res.set("Access-Control-Allow-Origin", "*");
+  const city = req.query.city;
+  const apiKey = functions.config().weather.key;
+  const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${apiKey}`;
+
+  try {
+    const { data } = await axios.get(url);
+    res.json(data);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+</code></pre>
+
+      <p>Állítsd be az API kulcsot a Cloud Function configban:</p>
+<pre><code>firebase functions:config:set weather.key="IDE_AZ_API_KEY"
+firebase deploy --only functions</code></pre>
+
+      <h3>4️⃣ Flutterből HTTP hívás a Functionre</h3>
+<pre><code>// lib/weather_service.dart
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+
+class WeatherService {
+  final baseUrl = 'https://us-central1-YOUR_PROJECT_ID.cloudfunctions.net/getWeather';
+
+  Future&lt;Map&lt;String, dynamic&gt;&gt; getWeather(String city) async {
+    final url = Uri.parse('$baseUrl?city=$city');
+    final response = await http.get(url);
+    if (response.statusCode == 200) {
+      return json.decode(response.body);
+    } else {
+      throw Exception('Hiba történt: ${response.statusCode}');
+    }
+  }
+}
+</code></pre>
+
+      <h3>5️⃣ Flutter UI (egyszerű verzió)</h3>
+<pre><code>// lib/main.dart
+import 'package:flutter/material.dart';
+import 'weather_service.dart';
+
+void main() => runApp(const MyApp());
+
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+  @override
+  Widget build(BuildContext context) {
+    return const MaterialApp(home: WeatherPage());
+  }
+}
+
+class WeatherPage extends StatefulWidget {
+  const WeatherPage({super.key});
+  @override
+  State&lt;WeatherPage&gt; createState() =&gt; _WeatherPageState();
+}
+
+class _WeatherPageState extends State&lt;WeatherPage&gt; {
+  final service = WeatherService();
+  final controller = TextEditingController();
+  Map&lt;String, dynamic&gt;? data;
+  bool loading = false;
+  String error = '';
+
+  Future&lt;void&gt; search() async {
+    setState(() { loading = true; error = ''; data = null; });
+    try {
+      final result = await service.getWeather(controller.text);
+      setState(() =&gt; data = result);
+    } catch (e) {
+      setState(() =&gt; error = e.toString());
+    } finally {
+      setState(() =&gt; loading = false);
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text('Weather App')),
+      body: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          children: [
+            TextField(controller: controller, decoration: const InputDecoration(labelText: 'Város')),
+            const SizedBox(height: 12),
+            ElevatedButton(onPressed: loading ? null : search, child: const Text('Lekérés')),
+            if (loading) const CircularProgressIndicator(),
+            if (error.isNotEmpty) Text(error, style: const TextStyle(color: Colors.red)),
+            if (data != null)
+              Card(
+                margin: const EdgeInsets.only(top: 16),
+                child: Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: Column(
+                    children: [
+                      Text('${data!['name']} (${data!['sys']['country']})', style: const TextStyle(fontSize: 22)),
+                      Text('${data!['weather'][0]['description']}'),
+                      Text('Hőmérséklet: ${data!['main']['temp']}°C'),
+                    ],
+                  ),
+                ),
+              ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+</code></pre>
+    </section>
+
+    <section>
+      <h2>🚀 Deploy – éles környezetbe helyezés</h2>
+      <p>Ha a fejlesztés lokálisan jól működik, publikáld az alkalmazást a Firebase Hostingra:</p>
+<pre><code># Web build
+flutter build web
+
+# Deploy (Hosting + Function)
+firebase deploy
+</code></pre>
+
+      <p>A deploy után megjelenik a publikus URL (pl. <code>https://weatherapp.web.app</code>), és a Function URL (pl. <code>https://us-central1-weatherapp.cloudfunctions.net/getWeather</code>).</p>
+
+      <p class="note">A Flutter Web build kimenete automatikusan a <code>build/web</code> mappába kerül.  
+      Ezt a Firebase Hostinghoz a <code>firebase.json</code>-ban állítsd be:</p>
+
+<pre><code>{
+  "hosting": {
+    "public": "build/web",
+    "rewrites": [
+      { "source": "/api/**", "function": "getWeather" },
+      { "source": "**", "destination": "/index.html" }
+    ]
+  }
+}</code></pre>
+    </section>
+
+    <section>
+      <h2>💡 Házi/ ha jól halasz órán</h2>
+      <ul>
+        <li>Kedvenc városok mentése Firestore-ba</li>
+        <li>Dark / light mód</li>
+        <li>Geolocation alapú automatikus város</li>
+        <li>Cache-elt utolsó lekérdezés</li>
+      </ul>
+    </section>
+
+
+  </main>
+</body>
+</html>
