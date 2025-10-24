@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+  <meta charset="UTF-8">
+  <title>Labor 5.</title>
+  <style>
+   body {
+  font-family: Arial, sans-serif;
+  line-height: 1.6;
+  max-width: 800px;
+  margin: 2em auto;
+  background: #121212;
+  color: #e0e0e0;
+  padding: 2em;
+  border-radius: 10px;
+  box-shadow: 0 0 20px rgba(0,0,0,0.6);
+}
+
+h1, h2 {
+  color: #ffffff;
+}
+
+code {
+  background: #1f1f1f;
+  color: #80cbc4;
+  padding: 2px 4px;
+  border-radius: 4px;
+  font-family: Consolas, monospace;
+}
+
+ul {
+  margin-top: 0.5em;
+}
+
+.task {
+  margin-bottom: 2em;
+  padding-bottom: 1em;
+  border-bottom: 1px solid #333;
+  background: #1a1a1a;
+  padding: 1.5em;
+  border-radius: 8px;
+}
+
+.bonus {
+  background: #1e2b1e;
+  padding: 1em;
+  border-radius: 5px;
+  border-left: 4px solid #4caf50;
+  color: #c8e6c9;
+}
+
+a {
+  color: #64b5f6;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+  </style>
+</head>
+<body>
+  <h1>🎮 Trivia Battle – Mini projektfeladat</h1>
+
+  <p><strong>Cél:</strong> Egy rövid, interaktív kvízjáték fejlesztése, amely kérdéseket jelenít meg a felhasználónak, pontszámot számol, és a végén megjeleníti az eredményt.</p>
+
+  <p><strong>Technológia:</strong> React <em>vagy</em> PHP (vagy akár kombinált megoldás: React frontend + PHP backend)</p>
+
+  <p><strong>Időkeret:</strong> kb. 2–3 óra</p>
+
+  <hr>
+
+  <div class="task">
+    <h2>1️⃣ Alapok előkészítése</h2>
+    <ul>
+      <li>Hozz létre egy új projektet:
+        <ul>
+          <li><strong>React esetén:</strong> <code>npx create-react-app trivia-battle</code> vagy Vite használata</li>
+          <li><strong>PHP esetén:</strong> Hozz létre egy mappát pl. <code>trivia-battle</code> néven a szerver gyökérkönyvtárában</li>
+        </ul>
+      </li>
+      <li>Készíts egy <code>index.html</code> vagy <code>index.php</code> fájlt alap HTML struktúrával.</li>
+      <li>Adj hozzá minimális stílusokat (pl. CSS-ben középre rendezett tartalom, gombok, színek).</li>
+    </ul>
+  </div>
+
+  <div class="task">
+    <h2>2️⃣ Kérdések lekérése</h2>
+    <ul>
+      <li>Használj nyilvános API-t, pl. <a href="https://opentdb.com/api_config.php" target="_blank">Open Trivia Database</a>.</li>
+      <li>Kérj le legalább 5 kérdést JSON formátumban (példa endpoint: <code>https://opentdb.com/api.php?amount=5&category=18&type=multiple</code>).</li>
+      <li>A kérdéseket és válaszlehetőségeket jelenítsd meg a felhasználónak.</li>
+      <li>React esetén <code>useEffect</code>-tel végezd a lekérést, PHP esetén <code>file_get_contents()</code>-szel vagy <code>cURL</code>-lel.</li>
+    </ul>
+  </div>
+
+  <div class="task">
+    <h2>3️⃣ Játéklogika</h2>
+    <ul>
+      <li>A felhasználó választhasson egy opciót minden kérdésnél.</li>
+      <li>Ha helyesen válaszol, nőjön a pontszáma.</li>
+      <li>A kérdések végén jelenjen meg az összesített eredmény (pl. <em>“4/5 helyes válasz”</em>).</li>
+      <li>Legyen „Új játék” gomb, ami visszaállítja a kezdeti állapotot.</li>
+    </ul>
+  </div>
+
+  <div class="task">
+    <h2>4️⃣ Ponttáblázat (Leaderboard)</h2>
+    <ul>
+      <li>A játék végén a felhasználó megadhatja a nevét.</li>
+      <li>A pontszámát és a nevét elmentheted:
+        <ul>
+          <li><strong>React-ben:</strong> <code>localStorage</code>-ba</li>
+          <li><strong>PHP-ban:</strong> fájlba (pl. <code>scores.json</code>) vagy adatbázisba</li>
+        </ul>
+      </li>
+      <li>Jelenítsd meg a top 5 eredményt egy listában.</li>
+    </ul>
+  </div>
+
+  <div class="task bonus">
+    <h2>💡 Kötelezö dolgok:</h2>
+    <ul>
+      <li>Színkódolt válaszok (zöld/piros a helyes vagy hibás után).</li>
+      <li>Nehezítési szintek (easy / medium / hard).</li>
+      <li>Időzítő: adott idő alatt kell válaszolni (pl. 10 másodperc / kérdés).</li>
+      <li>Animált átmenetek vagy progress bar (React esetén <code>Framer Motion</code> vagy CSS transitions).</li>
+      <li>Lokálisan tárold a pontszámokat (pl. Név - 5/10).</li>
+    </ul>
+  </div>
+
+  <div class="task">
+    <h2>5️⃣ Miután befejezted</h2>
+    <ul>
+      <li>A projektet mentsd le GitHubra</li>
+      <li>A projekt tartalmazzon:
+        <ul>
+          <li>Kódfájlokat (HTML, CSS, JS, TS, vagy PHP)</li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+
+  <hr>
+  <p><em>Jó munkát!</em></p>
+</body>
+</html>
